@@ -4,7 +4,6 @@ export default class Movie extends Component {
 
   render() {
    const  {movie} = this.props
-    console.log(this.props)
     return (
      <div className="movie">
                 <img

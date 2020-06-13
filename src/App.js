@@ -1,13 +1,30 @@
 import React from 'react';
-import Movie from './movie'
+import MovieList from './movieList'
 import * as MovieAPI from './MovieAPI';
 
 class App extends React.Component {
   state ={
-    movies : []
+    movies : [],
+    genres : [],
+
   }
 
   componentDidMount = () => {
+    MovieAPI.genres().then(
+      genres => {
+        genres.sort((a,b) => {
+          if(a.name.toUpperCase() < b.name.toUpperCase()){
+            return -1;
+          }
+          else if (b.name.toUpperCase() > a.name.toUpperCase()){
+            return 1;
+          }
+          return 0;
+        } )
+        console.log(genres)
+        this.setState({genres})
+      }
+    )
     MovieAPI.getAll().then(
       movies => {
         this.setState({movies})
@@ -41,24 +58,11 @@ class App extends React.Component {
             <div className="searchResults"></div>
           </form>
         </header>
-      <div className="titleList">
-         <div className="title">
-            <div className="titles-wrapper">
-              <div className="movie"></div>
-      {this.state.movies.map(
-        movie => (
-          <div key={movie.title}>
-          <Movie movie={movie}/>
-          </div>
-          )
+        <MovieList genres={this.state.genres} movies={this.state.movies}/>
 
-          )
-        }
-        </div>
-        </div>
-        </div>
+
       </>
-      
+
     );
   }
 }
