@@ -3,19 +3,20 @@ import Movie from './movie'
 
 export default class MovieList extends Component {
   render() {
-    const {genres, movies} = this.props
+    const {genres, movies, toggleMyList} = this.props
 
     return (
       <>
+
       {genres.map(
         genre=> (
-          <div className="titleList">
+          <div key={genre.id} className="titleList">
          <div className="title">
            <h1>{genre.name}</h1>
             <div className="titles-wrapper">
 
             {movies.filter(movie  => movie.genre_ids.includes(genre.id)).map(movie => (
-              <Movie movie={movie}/>
+              <Movie movie={movie} key={movie.id} toggleMyList={this.props.toggleMyList}/>
             ))}
 
           </div>
